@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class Field {
 
@@ -12,20 +13,46 @@ public class Field {
 
     private boolean [][] field; // Minefield
     private int nbMinesPlaced = 0;
-    Random alea = new Random();
+
     private Levels level;
     Field(){
         this.dimParameter = 5;
         this.nbMinesToPlace = 3;
     }
-    Field(Levels level) {        // Default constructor for field
-        nbMinesToPlace = nbMines[level.ordinal()];
-        dimParameter = dimParam[level.ordinal()];
+    Field(Levels level) {
+        // Default constructor for field7
+        if(level.ordinal() == 3){       // CUSTOM level = 3
+
+            // The user select the number of mines to place:
+            System.out.print("Select the number of mines: ");
+            int nbMinesToSelect = setParameter();
+
+            // The user select the dimension of the minefield:
+            System.out.print("Select the X dimension of the square field: ");
+            int dimParamToSelect = setParameter();
+
+            nbMinesToPlace = nbMinesToSelect;
+            dimParameter = dimParamToSelect;
+        }
+        else{
+            nbMinesToPlace = nbMines[level.ordinal()];  // EASY = 0 / MEDIUM = 1 / HARD = 2
+            dimParameter = dimParam[level.ordinal()];
+        }
     }
 
+    Field(int nbMinesPlaced, int dimParameter){
+        this.dimParameter = dimParameter;
+        this.nbMinesToPlace = nbMinesPlaced;
+    }
+    public int setParameter(){
+        Scanner sc = new Scanner(System.in);
+        int parameter = sc.nextInt();
+        return parameter;
+    }
     /* Field methods */
     public void initField() {      // Place the mine in the field
         this.field = new boolean[dimParameter][dimParameter];
+        Random alea = new Random();
         while(nbMinesPlaced < nbMinesToPlace){     // Check if there is enough available places to place a mine
             int x = alea.nextInt(dimParameter);  // Random generation of place (x,y) on the field
             int y = alea.nextInt(dimParameter);
@@ -50,6 +77,24 @@ public class Field {
 
     /* Level methods */
 
+    int computeNbMines(int x, int y){
+        int nb = 0;
+
+        int borneInfX = x==0 ? 0 : x-1;
+        int borneInfY = y==0 ? 0 : y-1;
+
+        int borneSupX = x==field.length ? field.length : x+1;
+        int borneSupY = y==field.length ? field.length : y+1;
+
+        for(int i = borneInfX ; i < borneSupX ; i++){
+            for(int j = borneInfY ; j < borneSupY ; j++){
+                if(field[x][y]){
+                    nb++;
+                }
+            }
+        }
+        return nb;
+    }
 
 
 

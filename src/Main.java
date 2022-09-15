@@ -1,7 +1,7 @@
 public class Main {
     private final Field field;
     Main(){
-        field = new Field(Levels.HARD);
+        field = new Field(Levels.CUSTOM);
         field.initField();
         field.display();
     }
