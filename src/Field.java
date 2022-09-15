@@ -69,7 +69,7 @@ public class Field {
                 if (field[x][y])
                     System.out.print('x'); // Display a mine if true
                 else
-                    System.out.print('o'); // Display an empty case
+                    System.out.print(computeNbMines(x,y)); // Display an empty case
             }
             System.out.println(); // Skips a line
         }
@@ -83,12 +83,12 @@ public class Field {
         int borneInfX = x==0 ? 0 : x-1;
         int borneInfY = y==0 ? 0 : y-1;
 
-        int borneSupX = x==field.length ? field.length : x+1;
-        int borneSupY = y==field.length ? field.length : y+1;
+        int borneSupX = x==field.length-1 ? field.length-1 : x+1;
+        int borneSupY = y==field[0].length-1 ? field[0].length-1 : y+1;
 
-        for(int i = borneInfX ; i < borneSupX ; i++){
-            for(int j = borneInfY ; j < borneSupY ; j++){
-                if(field[x][y]){
+        for(int i = borneInfX ; i <= borneSupX ; i++){
+            for(int j = borneInfY ; j <= borneSupY ; j++){
+                if(field[i][j]){
                     nb++;
                 }
             }
