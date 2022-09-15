@@ -1,8 +1,7 @@
 public class Main {
-    private static final int MAX = 10;
-    private Field field;
+    private final Field field;
     Main(){
-        field = new Field();
+        field = new Field(Levels.HARD);
         field.initField();
         field.display();
     }

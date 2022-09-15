@@ -1,28 +1,37 @@
 import java.util.Random;
 
 public class Field {
-    final static int NBMINES = 10;       // Number of mines to place
-    final static int DIM = 5;       // Dimension of the mine field
-    private int dim;
+
+    /* Field parameters */
+    //private final static int NBMINES = 3;
+    private final int nbMinesToPlace; // Number of mines to place on the minefield
+    private final static int nbMines[] = {3 ,7 ,10, 15}; // Possible mines of the minefield depending on level difficulty
+    private final static int DIM = 5;       // Dimension of the minefield
+    private final static int dimParam[] = {5 ,7 ,9, 12};  // Possible dimensions of the minefield depending on level difficulty
+    private final int dimParameter;
+
+    private boolean [][] field; // Minefield
+    private int nbMinesPlaced = 0;
     Random alea = new Random();
-
-    private boolean [][] field; // Mine field
-
-    public Field() {        // Default constructor for field
-        this.field = new boolean[DIM][DIM];
+    private Levels level;
+    Field(){
+        this.dimParameter = 5;
+        this.nbMinesToPlace = 3;
+    }
+    Field(Levels level) {        // Default constructor for field
+        nbMinesToPlace = nbMines[level.ordinal()];
+        dimParameter = dimParam[level.ordinal()];
     }
 
-    public Field(int dim) {     // Init connstructor for field
-        this.field = new boolean[dim][dim];
-    }
-    private int nbMinesPlacee = 0;
+    /* Field methods */
     public void initField() {      // Place the mine in the field
-        while(nbMinesPlacee < NBMINES){     // Check if there is enough available places to place a mine
-            int x = alea.nextInt(DIM);  // Random generation of place (x,y) on the field
-            int y = alea.nextInt(DIM);
-            if(this.field[x][y] == false){      // Check if the position is not currently occupied
+        this.field = new boolean[dimParameter][dimParameter];
+        while(nbMinesPlaced < nbMinesToPlace){     // Check if there is enough available places to place a mine
+            int x = alea.nextInt(dimParameter);  // Random generation of place (x,y) on the field
+            int y = alea.nextInt(dimParameter);
+            if(!this.field[x][y]){      // Check if the position is not currently occupied
                 this.field[x][y] = true;
-                nbMinesPlacee++;        // increments the number of placed mines
+                nbMinesPlaced++;        // increments the number of placed mines
             }
         }
     }
@@ -38,4 +47,11 @@ public class Field {
             System.out.println(); // Skips a line
         }
     }
+
+    /* Level methods */
+
+
+
+
+
 }
